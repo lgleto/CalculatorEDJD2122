@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonAC.setOnClickListener{
             textViewDisplay.text = "0"
             userIsInTheMiddleOfIntroduction = false
+            operand = 0.0
+            operator = null
         }
     }
 
@@ -83,31 +85,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     operand += textViewDisplay.text.toString().toDouble()
                 }
                 Operator.subtract -> {
-
+                    operand -= textViewDisplay.text.toString().toDouble()
                 }
                 Operator.multiply -> {
-
+                    operand *= textViewDisplay.text.toString().toDouble()
                 }
                 Operator.divide -> {
-
+                    operand /= textViewDisplay.text.toString().toDouble()
                 }
+            }
+
+            if (operand.rem(1)==0.0) {
+                textViewDisplay.text = operand.toInt().toString()
+            }else {
+                textViewDisplay.text = operand.toString()
             }
         }
 
-
-
-
-        if (operand.rem(1)==0.0) {
-            textViewDisplay.text = operand.toInt().toString()
-        }else {
-            textViewDisplay.text = operand.toString()
-        }
 
 
     }
 
     val doOperation = object : View.OnClickListener{
         override fun onClick(view: View?) {
+            performOperation()
             val buttonPressed = view as Button
             operator = when (buttonPressed.text) {
                 "+" ->  Operator.add
